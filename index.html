@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Floating Labels</title> 
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.css">
+	<style>
+		.container { 
+		  max-width: 1200px;
+		  margin: 0 auto;
+		  background-color: #eee;
+		  padding: 2em;
+		}
+
+		.form-group {
+		  display: inline-block;
+		  margin: 1em;
+		  
+		}
+
+		.form-group--floating-label {
+		  position: relative;
+		}
+
+		.floating-label--empty {
+		  transition: all 0.2s ease-out;
+		  position: absolute;
+		  top: 25%;
+		  left: 8px;
+		}
+
+		.floating-label--occupied {
+		  top: -12px;
+		  left: 1px;
+		  font-size: 12px;
+		}
+
+		.form-group__input{
+		  padding-left: 6px;
+		  padding-right: 0.25em;
+		  padding-top: 0.5em;
+		  padding-bottom: 0.5em;
+		  outline: 0;
+		  border: 0;
+		  border-bottom: 1px solid #666;
+		  background: transparent;
+		  font-size: 16px;
+		  
+		  &:focus ~ .bar {
+		    width: 100%;
+		  }
+		}
+
+		.bar {
+		  position: absolute;
+		  width: 0;
+		  display: inline-block;
+		  height: 2px;
+		  background-color: #ff8100;
+		  transition: 250ms ease all;
+		  
+		  &:before, &:after {
+		    content:'';
+		    height:2px; 
+		    bottom:1px; 
+		    position:absolute;
+		    background:#5264AE; 
+		  }
+		  
+		  &:before {
+		    left: 50%;
+		  }
+		  
+		  &:after {
+		    right: 50%;
+		  } 
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+	  <h1>Hi there</h1>
+	  <p>Lorem ipsum whater</p>
+	  <form class="tr-form">
+	    <div class="form-group form-group--floating-label">
+	      <label class="form-group__label" for="firstName">First Name</label>
+	      <input class="form-group__input" type="text" id="firstName" />
+	      <span class="bar"></span>
+	    </div>
+
+	    <div class="form-group form-group--floating-label">
+	      <label class="form-group__label" for="firstName">First Name</label>
+	      <input class="form-group__input" type="text" id="firstName" />
+	      <span class="bar"></span>
+	    </div>
+
+	    <div class="form-group form-group--floating-label">
+	      <label class="form-group__label" for="firstName">First Name</label>
+	      <input class="form-group__input" type="text" id="firstName" />
+	      <span class="bar"></span>
+	    </div>
+	  </form>
+	</div>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+		var inputs = $('.form-group--floating-label');
+		$.each(inputs, function(index, value) {
+		  addEmptyListener(value);
+		});
+
+		function addEmptyListener(group) {
+		  var firstLoad = true;
+		  var input = group.querySelector('input');
+		  var label = group.querySelector('label');
+		  var $input = $(input);
+		  var $label = $(label);
+
+		  if (input.value === '') {
+		    $label.addClass('floating-label--empty');
+		  }
+
+		  $input.on('focus', function() {
+		      $label.addClass('floating-label--occupied');
+		  });
+		  
+		  $input.on('focusout', function() {
+		      if (input.value === '') {
+		        $label.removeClass('floating-label--occupied');
+		      }
+		  });
+		}
+	</script>
+</body>
+</html>
